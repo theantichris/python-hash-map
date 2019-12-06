@@ -4,11 +4,11 @@ class HashMap:
     self.array = [None for i in range(self.array_size)]
 
   def assign(self, key, value):
-      index = self.compress(self.hash(key))
+      index = self.get_index(key)
       self.array[index] = value
 
   def retrieve(self, key):
-      index = self.compress(self.hash(key))
+      index = self.get_index(key)
       return self.array[index]
 
   def hash(self, key):
@@ -18,3 +18,6 @@ class HashMap:
 
   def compress(self, hash_code):
     return hash_code % self.array_size # Compress the hash code using modulus
+
+  def get_index(self, key):
+      return self.compress(self.hash(key))
