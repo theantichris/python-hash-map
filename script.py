@@ -15,6 +15,23 @@ class HashMap:
             self.array[index] = [key, value]
             return
 
+        number_collisions = 1
+        while current_array_value[0] != key:
+            new_index = self.compress(self.hash(key, number_collisions))
+            current_array_value = self.array[new_index]
+
+            if current_array_value is None:
+                self.array[new_index] = [key, value]
+                return
+
+            if current_array_value[0] == key:
+                self.array[new_index] = [key, value]
+                return
+
+            number_collisions += 1
+
+        return
+
     def retrieve(self, key):
         index = self.get_index(key)
         possible_return_value = self.array[index]
@@ -24,7 +41,6 @@ class HashMap:
 
         if possible_return_value[0] == key:
             return possible_return_value[1]
-        
 
     def hash(self, key, count_collisions=0):
         key_bytes = key.encode() # Convert key into list of bytes
