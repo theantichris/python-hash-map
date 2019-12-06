@@ -17,7 +17,14 @@ class HashMap:
 
     def retrieve(self, key):
         index = self.get_index(key)
-        return self.array[index]
+        possible_return_value = self.array[index]
+
+        if possible_return_value is None:
+            return None
+
+        if possible_return_value[0] == key:
+            return possible_return_value[1]
+        
 
     def hash(self, key):
         key_bytes = key.encode() # Convert key into list of bytes
