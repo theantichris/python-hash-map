@@ -31,13 +31,8 @@ class HashMap:
         number_collisions += 1
         self.retrieve(key, number_collisions)
 
-    def hash(self, key, count_collisions=0):
-        key_bytes = key.encode()  # Convert key into list of bytes
-        hash_code = sum(key_bytes)  # Add the bytes together
-        return hash_code + count_collisions
-
-    def compress(self, hash_code):
-        return hash_code % self.array_size  # Compress the hash code using modulus
-
     def get_index(self, key, count_collisions=0):
-        return self.compress(self.hash(key, count_collisions))
+        key_bytes = key.encode()  # Convert key into list of bytes
+        hash_code = sum(key_bytes) + count_collisions  # Add the bytes together
+
+        return hash_code % self.array_size  # Compress the hash code using modulus
