@@ -42,6 +42,21 @@ class HashMap:
         if possible_return_value[0] == key:
             return possible_return_value[1]
 
+        number_collisions = 1
+        while possible_return_value[0] != key:
+            new_index = self.compress(self.hash(key, number_collisions))
+            possible_return_value = self.array[new_index]
+
+            if possible_return_value is None:
+                return None
+
+            if possible_return_value[0] == key:
+                return possible_return_value[1]
+
+            number_collisions += 1
+
+        return
+
     def hash(self, key, count_collisions=0):
         key_bytes = key.encode() # Convert key into list of bytes
         hash_code = sum(key_bytes) # Add the bytes together
