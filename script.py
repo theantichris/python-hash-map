@@ -26,10 +26,10 @@ class HashMap:
             return possible_return_value[1]
         
 
-    def hash(self, key):
+    def hash(self, key, count_collisions=0):
         key_bytes = key.encode() # Convert key into list of bytes
         hash_code = sum(key_bytes) # Add the bytes together
-        return hash_code
+        return hash_code + count_collisions
 
     def compress(self, hash_code):
         return hash_code % self.array_size # Compress the hash code using modulus
