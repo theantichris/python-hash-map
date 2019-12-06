@@ -5,7 +5,11 @@ class HashMap:
 
   def assign(self, key, value):
       index = self.get_index(key)
-      self.array[index] = value
+      current_array_value = self.array[index]
+      if current_array_value and current_array_value[0] == key:
+          self.array[index][1] = value
+      else:
+          self.array[index] = [key, value]
 
   def retrieve(self, key):
       index = self.get_index(key)
