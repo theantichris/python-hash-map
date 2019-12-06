@@ -4,9 +4,12 @@ class HashMap:
     self.array = [None for i in range(self.array_size)]
 
   def assign(self, key, value):
-      hash_code = self.hash(key)
-      index = self.compress(hash_code)
+      index = self.compress(self.hash(key))
       self.array[index] = value
+
+  def retrieve(self, key):
+      index = self.compress(self.hash(key))
+      return self.array[index]
 
   def hash(self, key):
     key_bytes = key.encode() # Convert key into list of bytes
