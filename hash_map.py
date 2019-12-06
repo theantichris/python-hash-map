@@ -17,7 +17,7 @@ class HashMap:
 
         number_collisions = 1
         while current_array_value[0] != key:
-            new_index = self.compress(self.hash(key, number_collisions))
+            new_index = self.get_index(key, number_collisions)
             current_array_value = self.array[new_index]
 
             if current_array_value is None:
@@ -44,7 +44,7 @@ class HashMap:
 
         number_collisions = 1
         while possible_return_value[0] != key:
-            new_index = self.compress(self.hash(key, number_collisions))
+            new_index = self.get_index(key, number_collisions)
             possible_return_value = self.array[new_index]
 
             if possible_return_value is None:
@@ -65,5 +65,5 @@ class HashMap:
     def compress(self, hash_code):
         return hash_code % self.array_size  # Compress the hash code using modulus
 
-    def get_index(self, key):
-        return self.compress(self.hash(key))
+    def get_index(self, key, count_collisions=0):
+        return self.compress(self.hash(key, count_collisions))
