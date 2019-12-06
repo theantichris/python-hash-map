@@ -3,8 +3,8 @@ class HashMap:
         self.array_size = array_size
         self.array = [None for i in range(self.array_size)]
 
-    def assign(self, key, value):
-        index = self.get_index(key)
+    def assign(self, key, value, number_collisions=0):
+        index = self.get_index(key, number_collisions)
         current_array_value = self.array[index]
 
         if current_array_value is None:
@@ -15,25 +15,11 @@ class HashMap:
             self.array[index] = [key, value]
             return
 
-        number_collisions = 1
-        while current_array_value[0] != key:
-            new_index = self.get_index(key, number_collisions)
-            current_array_value = self.array[new_index]
+        number_collisions += 1
+        self.assign(key, value, number_collisions)
 
-            if current_array_value is None:
-                self.array[new_index] = [key, value]
-                return
-
-            if current_array_value[0] == key:
-                self.array[new_index] = [key, value]
-                return
-
-            number_collisions += 1
-
-        return
-
-    def retrieve(self, key):
-        index = self.get_index(key)
+    def retrieve(self, key, number_collisions=0):
+        index = self.get_index(key, number_collisions)
         possible_return_value = self.array[index]
 
         if possible_return_value is None:
@@ -42,20 +28,8 @@ class HashMap:
         if possible_return_value[0] == key:
             return possible_return_value[1]
 
-        number_collisions = 1
-        while possible_return_value[0] != key:
-            new_index = self.get_index(key, number_collisions)
-            possible_return_value = self.array[new_index]
-
-            if possible_return_value is None:
-                return None
-
-            if possible_return_value[0] == key:
-                return possible_return_value[1]
-
-            number_collisions += 1
-
-        return
+        number_collisions += 1
+        self.retrieve(key, number_collisions)
 
     def hash(self, key, count_collisions=0):
         key_bytes = key.encode()  # Convert key into list of bytes
